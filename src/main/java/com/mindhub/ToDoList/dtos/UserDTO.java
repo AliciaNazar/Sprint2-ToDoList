@@ -1,12 +1,17 @@
 package com.mindhub.ToDoList.dtos;
 
 import com.mindhub.ToDoList.models.EntityUser;
+import com.mindhub.ToDoList.models.Task;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDTO {
 
     private Long id;
     private String username;
     private String email;
+    private List<TaskDTO> tasks;
 
     public Long getId() {
         return id;
@@ -32,6 +37,13 @@ public class UserDTO {
         this.email = email;
     }
 
+    public List<TaskDTO> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskDTO> tasks) {
+        this.tasks = tasks;
+    }
 
     public static EntityUser toEntity(UserDTO userDTO){
         if(userDTO==null){
@@ -40,6 +52,11 @@ public class UserDTO {
         EntityUser user = new EntityUser();
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
+        user.setTasks(userDTO.getTasks()
+                .stream()
+                .map(TaskDTO::toEntity)//aqui a cada taskDTO lo transformo con mi función toEntity a task
+                .toList());
         return user;
     }
 }
+

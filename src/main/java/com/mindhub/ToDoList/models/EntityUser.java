@@ -23,10 +23,11 @@ public class EntityUser {
     public EntityUser() {
     }
 
-    public EntityUser(String username, String password, String email) {
+    public EntityUser(String username, String password, String email, List<Task> tasks) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.tasks=tasks;
     }
 
     public Long getId() {
@@ -61,6 +62,13 @@ public class EntityUser {
         this.email = email;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
 
     public static UserDTO toDTO(EntityUser user){
         if(user==null){
@@ -70,6 +78,12 @@ public class EntityUser {
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
+        userDTO.setTasks(user.getTasks()
+                .stream()
+                .map(Task::toDTO)
+                .toList());
         return userDTO;
     }
 }
+
+
