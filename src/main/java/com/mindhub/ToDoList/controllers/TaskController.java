@@ -1,6 +1,7 @@
 package com.mindhub.ToDoList.controllers;
 
 import com.mindhub.ToDoList.dtos.TaskDTO;
+import com.mindhub.ToDoList.dtos.TaskDTORequest;
 import com.mindhub.ToDoList.exceptions.TaskNotFoundException;
 import com.mindhub.ToDoList.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/tasks")
 public class TaskController {
 
     @Autowired
@@ -21,10 +24,16 @@ public class TaskController {
         return ResponseEntity.ok(taskDTO);
     }
 
-    @PostMapping("/{idUser}")
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO, @PathVariable("idUser") Long id){
-        TaskDTO task = this.taskService.createTask(taskDTO, id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(task);
+    @GetMapping
+    public ResponseEntity<List<TaskDTO>> getTasks(){
+        List<TaskDTO> tasks = this.taskService.getTasks();
+        return ResponseEntity.ok(tasks);
+    }
+
+    @PostMapping
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTORequest taskDTORequest){
+        TaskDTO taskDTO = this.taskService.createTask(taskDTORequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskDTO);
     }
 
     @DeleteMapping("/{id}")

@@ -19,14 +19,14 @@ public class ToDoListApplication {
 
 
 
-//	@Bean
-//	public CommandLineRunner initData(UserRepository userRepository, TaskRepository taskRepository){
-//		return args -> {
-//			EntityUser user = new EntityUser("sadas","sasa","sa",);
-//			userRepository.save(user);
+	@Bean
+	public CommandLineRunner initData(UserRepository userRepository, TaskRepository taskRepository){
+		return args -> {
+			EntityUser user = new EntityUser("as","as","as");
+			userRepository.save(user);
 //			Task task =new Task("Estudiar","progra", TaskStatus.PENDING,user);
 //			taskRepository.save(task);
-//		};
-//	}
+		};
+	}
 
 }

@@ -1,7 +1,6 @@
 package com.mindhub.ToDoList.dtos;
 
 import com.mindhub.ToDoList.models.EntityUser;
-import com.mindhub.ToDoList.models.Task;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +11,19 @@ public class UserDTO {
     private String username;
     private String email;
     private List<TaskDTO> tasks;
+
+    public UserDTO(){}
+
+    public UserDTO(EntityUser user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.tasks = user
+                .getTasks()
+                .stream()
+                .map(task -> new TaskDTO(task))
+                .toList();
+    }
 
     public Long getId() {
         return id;
@@ -54,8 +66,8 @@ public class UserDTO {
         user.setEmail(userDTO.getEmail());
         user.setTasks(userDTO.getTasks()
                 .stream()
-                .map(TaskDTO::toEntity)//aqui a cada taskDTO lo transformo con mi función toEntity a task
-                .toList());
+                .map(TaskDTO::toEntity)// Stream<Task> aqui a cada taskDTO lo transformo con mi función toEntity a task
+                .collect(Collectors.toSet())); //Set<Task>
         return user;
     }
 }

@@ -1,10 +1,11 @@
 package com.mindhub.ToDoList.models;
 
 import com.mindhub.ToDoList.dtos.UserDTO;
+import com.mindhub.ToDoList.dtos.UserDTORequest;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class EntityUser {
@@ -17,17 +18,17 @@ public class EntityUser {
     private String email;
 
     @OneToMany(mappedBy = "user")
-    private List<Task> tasks = new ArrayList<>();
+    private Set<Task> tasks = new HashSet<>();
 
 
     public EntityUser() {
     }
 
-    public EntityUser(String username, String password, String email, List<Task> tasks) {
+    public EntityUser(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.tasks=tasks;
+
     }
 
     public Long getId() {
@@ -62,26 +63,31 @@ public class EntityUser {
         this.email = email;
     }
 
-    public List<Task> getTasks() {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
+    }
+
+
+
+    public static UserDTORequest toDTORequest(EntityUser user){
+        if(user==null){
+            return null;
+        }
+        UserDTORequest userDTO = new UserDTORequest(user);
+
+        return userDTO;
     }
 
     public static UserDTO toDTO(EntityUser user){
         if(user==null){
             return null;
         }
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setTasks(user.getTasks()
-                .stream()
-                .map(Task::toDTO)
-                .toList());
+        UserDTO userDTO = new UserDTO(user);
+
         return userDTO;
     }
 }

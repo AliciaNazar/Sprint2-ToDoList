@@ -67,11 +67,7 @@ public class Task {
 
 
     public static TaskDTO toDTO(Task task){
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setId(task.getId());
-        taskDTO.setDescription(task.getDescription());
-        taskDTO.setStatus(task.getStatus());
-        taskDTO.setTitle(task.getTitle());
+        TaskDTO taskDTO = new TaskDTO(task);
         return taskDTO;
     }
 

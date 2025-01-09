@@ -1,22 +1,27 @@
 package com.mindhub.ToDoList.services.impl;
 
 import com.mindhub.ToDoList.dtos.TaskDTO;
+import com.mindhub.ToDoList.dtos.TaskDTORequest;
 import com.mindhub.ToDoList.exceptions.TaskNotFoundException;
 import com.mindhub.ToDoList.models.EntityUser;
 import com.mindhub.ToDoList.models.Task;
 import com.mindhub.ToDoList.repositories.TaskRepository;
+import com.mindhub.ToDoList.repositories.UserRepository;
 import com.mindhub.ToDoList.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
+
 import java.util.List;
+
 
 @Service
 public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public TaskDTO getTaskById(Long id) throws TaskNotFoundException {
@@ -25,16 +30,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getTasks() {
-        return List.of();
+    public List<TaskDTO> getTasks() {
+        List<Task> tasks= taskRepository.findAll();
+        List<TaskDTO> tasksDTOS = tasks.stream()
+                .map(Task::toDTO)
+                .toList();
+
+        return tasksDTOS;
     }
 
     @Override
-    public TaskDTO createTask(TaskDTO taskDTO, Long idUser) {
-        Task task = TaskDTO.toEntity(taskDTO);
-        EntityUser user = new EntityUser();
-        user.setId(idUser);
-        task.setUser(user);
+    public TaskDTO createTask(TaskDTORequest taskDTORequest) {
+
+        EntityUser user = this.userRepository.findById(taskDTORequest.getUser().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        Task task = TaskDTORequest.toEntity(taskDTORequest,user); //creo una tarea y le asigno los valores de taskDTORequest
         task = this.taskRepository.save(task);
         return Task.toDTO(task);
     }

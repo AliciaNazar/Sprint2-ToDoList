@@ -1,6 +1,7 @@
 package com.mindhub.ToDoList.services.impl;
 
 import com.mindhub.ToDoList.dtos.UserDTO;
+import com.mindhub.ToDoList.dtos.UserDTORequest;
 import com.mindhub.ToDoList.exceptions.UserNotFoundException;
 import com.mindhub.ToDoList.models.EntityUser;
 import com.mindhub.ToDoList.repositories.UserRepository;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(Long id) throws UserNotFoundException {
         EntityUser user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No se encontro el usuario"));
-        return EntityUser.toDTO(user);
+        return new UserDTO(user);
     }
 
     @Override
@@ -29,8 +30,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
-        EntityUser user = UserDTO.toEntity(userDTO);
+    public UserDTO createUser(UserDTORequest userDTORequest) {
+        EntityUser user = UserDTORequest.toEntity(userDTORequest);
         user = this.userRepository.save(user); //reasigné user para ver cómo se actualizó el id (ya que no se le asigna hasta que se añade a la bd)
         return EntityUser.toDTO(user);
     }

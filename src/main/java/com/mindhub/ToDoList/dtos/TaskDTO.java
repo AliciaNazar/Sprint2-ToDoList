@@ -10,6 +10,15 @@ public class TaskDTO {
     private String description;
     private TaskStatus status;
 
+    public TaskDTO() {
+    }
+    public TaskDTO(Task task) {
+        this.id = task.getId();
+        this.title = task.getTitle();
+        this.description = task.getDescription();
+        this.status = task.getStatus();
+    }
+
     public Long getId() {
         return id;
     }
