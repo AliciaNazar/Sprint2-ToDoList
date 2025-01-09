@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface TaskService {
 
+    TaskDTO getTaskById(Long id) throws TaskNotFoundException;
+    TaskDTO createTask (TaskDTO taskDTO, Long idUser);
 
-    Task getTaskById(Long id) throws TaskNotFoundException;
     List<Task> getTasks();
-    Task createTask (TaskDTO taskDTO);
-    Task updateTask (Long id,TaskDTO taskDTO);
-    void deleteTask(Long id);
+    TaskDTO updateTask (Long id,TaskDTO taskDTO) throws TaskNotFoundException;
+    void deleteTask(Long id) throws TaskNotFoundException;
 }

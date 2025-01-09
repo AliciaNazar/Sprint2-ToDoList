@@ -13,8 +13,8 @@ public interface UserService {
     UserDTO getUserById(Long id) throws UserNotFoundException;
     List<EntityUser> getUsers();
     UserDTO createUser (UserDTO userDTO);
-    EntityUser updateUser (Long id,UserDTO userDTO);
-    void deleteUser(Long id);
+    UserDTO updateUser (Long id,UserDTO userDTO) throws UserNotFoundException;
+    void deleteUser(Long id) throws UserNotFoundException;
 
 
 

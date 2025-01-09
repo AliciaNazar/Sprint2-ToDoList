@@ -1,5 +1,6 @@
 package com.mindhub.ToDoList.dtos;
 
+import com.mindhub.ToDoList.models.Task;
 import com.mindhub.ToDoList.models.TaskStatus;
 
 public class TaskDTO {
@@ -40,4 +41,14 @@ public class TaskDTO {
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
+
+
+    public static Task toEntity(TaskDTO taskDTO){
+        Task task = new Task();
+        task.setStatus(taskDTO.getStatus());
+        task.setDescription(taskDTO.getDescription());
+        task.setTitle(taskDTO.getTitle());
+        return task;
+    }
+
 }

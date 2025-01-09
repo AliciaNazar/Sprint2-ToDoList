@@ -1,5 +1,6 @@
 package com.mindhub.ToDoList.models;
 
+import com.mindhub.ToDoList.dtos.TaskDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -65,5 +66,13 @@ public class Task {
     }
 
 
+    public static TaskDTO toDTO(Task task){
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setId(task.getId());
+        taskDTO.setDescription(task.getDescription());
+        taskDTO.setStatus(task.getStatus());
+        taskDTO.setTitle(task.getTitle());
+        return taskDTO;
+    }
 
 }
