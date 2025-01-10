@@ -1,7 +1,17 @@
 package com.mindhub.ToDoList.exceptions;
 
-public class UserNotFoundException extends Exception{
-    public UserNotFoundException(String message) {
-        super(message);
+import org.springframework.http.HttpStatus;
+
+public class UserNotFoundException extends RuntimeException{
+
+    private final HttpStatus status;
+
+    public UserNotFoundException() {
+        super("User not found.");
+        this.status = HttpStatus.NOT_FOUND;
+    }
+
+    public HttpStatus getStatus(){
+        return status;
     }
 }

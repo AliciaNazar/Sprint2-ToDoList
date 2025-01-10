@@ -22,7 +22,7 @@ public class ToDoListApplication {
 	@Bean
 	public CommandLineRunner initData(UserRepository userRepository, TaskRepository taskRepository){
 		return args -> {
-			EntityUser user = new EntityUser("as","as","as");
+			EntityUser user = new EntityUser("ali","ali1234","ali@gmail.com");
 			userRepository.save(user);
 //			Task task =new Task("Estudiar","progra", TaskStatus.PENDING,user);
 //			taskRepository.save(task);

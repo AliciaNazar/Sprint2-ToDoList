@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long id) throws UserNotFoundException {
-        EntityUser user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No se encontro el usuario"));
+        EntityUser user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
         return new UserDTO(user);
     }
 
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) throws UserNotFoundException{
         EntityUser user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("No se encontró el usuario"));
+                .orElseThrow(() -> new UserNotFoundException());
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user = this.userRepository.save(user);
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) throws UserNotFoundException{
         EntityUser user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("No se encontro el usuario"));
+                .orElseThrow(() -> new UserNotFoundException());
         userRepository.deleteById(id);
     }
 }
