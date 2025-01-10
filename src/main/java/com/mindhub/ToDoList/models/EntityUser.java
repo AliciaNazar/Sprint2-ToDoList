@@ -35,10 +35,6 @@ public class EntityUser {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -71,25 +67,6 @@ public class EntityUser {
         this.tasks = tasks;
     }
 
-
-
-    public static UserDTORequest toDTORequest(EntityUser user){
-        if(user==null){
-            return null;
-        }
-        UserDTORequest userDTO = new UserDTORequest(user);
-
-        return userDTO;
-    }
-
-    public static UserDTO toDTO(EntityUser user){
-        if(user==null){
-            return null;
-        }
-        UserDTO userDTO = new UserDTO(user);
-
-        return userDTO;
-    }
 }
 
 

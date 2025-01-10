@@ -52,12 +52,5 @@ public class TaskDTO {
     }
 
 
-    public static Task toEntity(TaskDTO taskDTO){
-        Task task = new Task();
-        task.setStatus(taskDTO.getStatus());
-        task.setDescription(taskDTO.getDescription());
-        task.setTitle(taskDTO.getTitle());
-        return task;
-    }
 
 }

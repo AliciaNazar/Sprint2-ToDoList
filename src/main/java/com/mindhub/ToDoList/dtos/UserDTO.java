@@ -57,18 +57,5 @@ public class UserDTO {
         this.tasks = tasks;
     }
 
-    public static EntityUser toEntity(UserDTO userDTO){
-        if(userDTO==null){
-            return null;
-        }
-        EntityUser user = new EntityUser();
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
-        user.setTasks(userDTO.getTasks()
-                .stream()
-                .map(TaskDTO::toEntity)// Stream<Task> aqui a cada taskDTO lo transformo con mi función toEntity a task
-                .collect(Collectors.toSet())); //Set<Task>
-        return user;
-    }
 }
 

@@ -26,16 +26,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDTO getTaskById(Long id) throws TaskNotFoundException {
         Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("No se encontró la tarea"));
-        return Task.toDTO(task);
+        return new TaskDTO(task);
     }
 
     @Override
     public List<TaskDTO> getTasks() {
         List<Task> tasks= taskRepository.findAll();
         List<TaskDTO> tasksDTOS = tasks.stream()
-                .map(Task::toDTO)
+                .map(task -> new TaskDTO(task))
                 .toList();
-
         return tasksDTOS;
     }
 
@@ -46,7 +45,7 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
         Task task = TaskDTORequest.toEntity(taskDTORequest,user); //creo una tarea y le asigno los valores de taskDTORequest
         task = this.taskRepository.save(task);
-        return Task.toDTO(task);
+        return new TaskDTO(task);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(taskDTO.getDescription());
         task.setStatus(taskDTO.getStatus());
         task = this.taskRepository.save(task);
-        return Task.toDTO(task);
+        return new TaskDTO(task);
 
     }
 

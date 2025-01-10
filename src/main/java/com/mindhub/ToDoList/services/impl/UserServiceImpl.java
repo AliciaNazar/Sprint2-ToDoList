@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTORequest userDTORequest) {
         EntityUser user = UserDTORequest.toEntity(userDTORequest);
         user = this.userRepository.save(user); //reasigné user para ver cómo se actualizó el id (ya que no se le asigna hasta que se añade a la bd)
-        return EntityUser.toDTO(user);
+        return new UserDTO(user);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user = this.userRepository.save(user);
-        return EntityUser.toDTO(user);
+        return new UserDTO(user);
     }
 
     @Override
