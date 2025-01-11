@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) throws UserNotFoundException{
-        EntityUser user = userRepository.findById(id)
+        userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException());
         userRepository.deleteById(id);
     }

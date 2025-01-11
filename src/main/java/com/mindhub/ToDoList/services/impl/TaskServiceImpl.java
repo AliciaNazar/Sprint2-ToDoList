@@ -64,7 +64,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(Long id) throws TaskNotFoundException{
-        Task task = taskRepository.findById(id)
+        taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException());
         taskRepository.deleteById(id);
     }
