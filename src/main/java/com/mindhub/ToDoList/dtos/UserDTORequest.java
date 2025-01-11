@@ -18,6 +18,7 @@ public class UserDTORequest {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
+        this.password = user.getPassword();
     }
 
     public Long getId() {

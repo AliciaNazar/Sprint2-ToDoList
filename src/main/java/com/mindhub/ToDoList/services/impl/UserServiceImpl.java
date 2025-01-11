@@ -37,11 +37,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(Long id, UserDTO userDTO) throws UserNotFoundException{
+    public UserDTO updateUser(Long id, UserDTORequest userDTORequest) throws UserNotFoundException{
         EntityUser user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException());
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
+        user.setUsername(userDTORequest.getUsername());
+        user.setEmail(userDTORequest.getEmail());
+        user.setPassword(userDTORequest.getPassword());
         user = this.userRepository.save(user);
         return new UserDTO(user);
     }
