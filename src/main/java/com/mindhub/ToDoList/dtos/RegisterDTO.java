@@ -1,40 +1,21 @@
-package com.mindhub.ToDoList.models;
+package com.mindhub.ToDoList.dtos;
 
-import com.mindhub.ToDoList.dtos.UserDTO;
-import com.mindhub.ToDoList.dtos.UserDTORequest;
-import jakarta.persistence.*;
+import com.mindhub.ToDoList.models.RoleType;
 
-import java.util.HashSet;
-import java.util.Set;
-
-@Entity
-public class EntityUser {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class RegisterDTO {
     private String username;
     private String password;
     private String email;
-    private RoleType roleType = RoleType.ADMIN;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Task> tasks = new HashSet<>();
+    private RoleType roleType;
 
 
-    public EntityUser() {
-    }
-
-    public EntityUser(String username, String password, String email) {
+    public RegisterDTO(String username, String password, String email, RoleType roleType) {
         this.username = username;
         this.password = password;
         this.email = email;
-
+        this.roleType = roleType;
     }
 
-    public Long getId() {
-        return id;
-    }
 
     public String getUsername() {
         return username;
@@ -67,15 +48,4 @@ public class EntityUser {
     public void setRoleType(RoleType roleType) {
         this.roleType = roleType;
     }
-
-    public Set<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
-    }
-
 }
-
-
