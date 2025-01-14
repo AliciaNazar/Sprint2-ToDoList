@@ -1,6 +1,6 @@
 package com.mindhub.ToDoList.models;
 
-import com.mindhub.ToDoList.dtos.TaskDTO;
+import com.mindhub.ToDoList.models.Enums.TaskStatus;
 import jakarta.persistence.*;
 
 @Entity

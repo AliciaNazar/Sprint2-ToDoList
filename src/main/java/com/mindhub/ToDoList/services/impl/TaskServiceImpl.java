@@ -2,6 +2,7 @@ package com.mindhub.ToDoList.services.impl;
 
 import com.mindhub.ToDoList.dtos.TaskDTO;
 import com.mindhub.ToDoList.dtos.TaskDTORequest;
+import com.mindhub.ToDoList.dtos.UserDTO;
 import com.mindhub.ToDoList.exceptions.TaskNotFoundException;
 import com.mindhub.ToDoList.exceptions.UserNotFoundException;
 import com.mindhub.ToDoList.models.EntityUser;
@@ -40,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO createTask(TaskDTORequest taskDTORequest) {
+    public TaskDTO createTaskByAdmin(TaskDTORequest taskDTORequest) {
 
         EntityUser user = this.userRepository.findById(taskDTORequest.getUser().getId())
                 .orElseThrow(() -> new UserNotFoundException());
@@ -48,6 +49,16 @@ public class TaskServiceImpl implements TaskService {
         task = this.taskRepository.save(task);
         return new TaskDTO(task);
     }
+
+    @Override
+    public TaskDTO createTaskByUser(TaskDTO taskDTO, UserDTO userDTO) {
+        EntityUser user = this.userRepository.findByUsername(userDTO.getUsername()).orElseThrow(() -> new UserNotFoundException()); ;
+        Task task = new Task(taskDTO.getTitle(),taskDTO.getDescription(),taskDTO.getStatus(),user);
+        task = this.taskRepository.save(task);
+        return new TaskDTO(task);
+    }
+
+
 
     @Override
     public TaskDTO updateTask(Long id, TaskDTO taskDTO) throws TaskNotFoundException{

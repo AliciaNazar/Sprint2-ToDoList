@@ -8,7 +8,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -22,6 +24,12 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private AccessDeniedHandler customAccessDeniedHandler;
+
+    @Autowired
+    private AuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -41,11 +49,18 @@ public class SecurityConfig {
                                 .requestMatchers( "/api/auth/**", "/index.html" ).permitAll()
                                 .requestMatchers("/api/user/**").hasAuthority("USER")
                                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")// Allow public access to specific endpoints
+                                .requestMatchers("/api/users/**").hasAuthority("ADMIN")
+                                .requestMatchers("/api/tasks/**").hasAnyAuthority("ADMIN","USER")
+                                .requestMatchers("/api/public/welcome").permitAll()
                                 .anyRequest().denyAll() // All other requests must be authenticated
                 )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+                        .accessDeniedHandler(customAccessDeniedHandler))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable) //estoy desactivando la autenticación básica
                 .cors(httpSecurityCorsConfigurer -> corsConfigurationSource()) //estoy modificando la configuración del cors
+                .headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin()).disable()) // Permitir el uso de frames para H2
                 .sessionManagement(sessionManagement -> //creo una política de sesión donde la sesión no existe del lado del servidor
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

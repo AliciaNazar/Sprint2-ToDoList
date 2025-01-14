@@ -49,7 +49,7 @@ public class TaskController {
     })
     @PostMapping
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTORequest taskDTORequest){
-        TaskDTO taskDTO = this.taskService.createTask(taskDTORequest);
+        TaskDTO taskDTO = this.taskService.createTaskByAdmin(taskDTORequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(taskDTO);
     }
 

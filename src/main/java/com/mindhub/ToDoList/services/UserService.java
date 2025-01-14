@@ -10,10 +10,14 @@ import java.util.List;
 public interface UserService {
 
     UserDTO getUserById(Long id) throws UserNotFoundException;
-    List<EntityUser> getUsers();
+    UserDTO getUserByUsername(String username) throws UserNotFoundException;
+    List<UserDTO> getUsers();
     UserDTO createUser (UserDTORequest userDTO);
     UserDTO updateUser (Long id, UserDTORequest userDTORequest) throws UserNotFoundException;
     void deleteUser(Long id) throws UserNotFoundException;
+
+
+    UserDTO registerUser(UserDTORequest userDTORequest);
 
 
 

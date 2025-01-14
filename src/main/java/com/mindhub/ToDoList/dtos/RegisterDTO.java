@@ -1,6 +1,6 @@
 package com.mindhub.ToDoList.dtos;
 
-import com.mindhub.ToDoList.models.RoleType;
+import com.mindhub.ToDoList.models.Enums.RoleType;
 
 public class RegisterDTO {
     private String username;

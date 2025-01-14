@@ -1,9 +1,9 @@
 package com.mindhub.ToDoList;
 
 import com.mindhub.ToDoList.models.EntityUser;
-import com.mindhub.ToDoList.models.RoleType;
+import com.mindhub.ToDoList.models.Enums.RoleType;
 import com.mindhub.ToDoList.models.Task;
-import com.mindhub.ToDoList.models.TaskStatus;
+import com.mindhub.ToDoList.models.Enums.TaskStatus;
 import com.mindhub.ToDoList.repositories.TaskRepository;
 import com.mindhub.ToDoList.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +27,18 @@ public class ToDoListApplication {
 	@Bean
 	public CommandLineRunner initData(UserRepository userRepository, TaskRepository taskRepository){
 		return args -> {
-			EntityUser user = new EntityUser("ali",passwordEncoder.encode("ali1234"),"ali@gmail.com");
-			userRepository.save(user);
-//			Task task =new Task("Estudiar","progra", TaskStatus.PENDING,user);
-//			taskRepository.save(task);
+			EntityUser user1 = new EntityUser("ali",passwordEncoder.encode("ali1234"),"ali@gmail.com");
+			user1.setRoleType(RoleType.USER);
+			userRepository.save(user1);
+			EntityUser user2 = new EntityUser("cris",passwordEncoder.encode("ali1234"),"cris@gmail.com");
+			user2.setRoleType(RoleType.ADMIN);
+			userRepository.save(user2);
+			Task task1 = new Task("Estudiar","estudiar html",TaskStatus.PENDING,user1);
+			Task task2 = new Task("Leer","leer la documentación",TaskStatus.PENDING,user2);
+			Task task3 = new Task("Leer","leer la documentación",TaskStatus.PENDING,user1);
+			taskRepository.save(task1);
+			taskRepository.save(task2);
+			taskRepository.save(task3);
 		};
 	}
 

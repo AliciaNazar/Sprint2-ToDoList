@@ -9,14 +9,19 @@ import com.mindhub.ToDoList.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDTO getUserById(Long id) throws UserNotFoundException {
@@ -25,13 +30,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<EntityUser> getUsers() {
-        return List.of();
+    public UserDTO getUserByUsername(String username) throws UserNotFoundException{
+        EntityUser user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException());
+        return new UserDTO(user);
     }
+
+    @Override
+    public List<UserDTO> getUsers() {
+        List<EntityUser> users = userRepository.findAll();
+        List<UserDTO> userDTOS = users.stream()
+                .map(user -> new UserDTO(user))
+                .toList();
+        return userDTOS;
+    }
+
 
     @Override
     public UserDTO createUser(UserDTORequest userDTORequest) {
         EntityUser user = UserDTORequest.toEntity(userDTORequest);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = this.userRepository.save(user); //reasigné user para ver cómo se actualizó el id (ya que no se le asigna hasta que se añade a la bd)
         return new UserDTO(user);
     }
@@ -40,9 +57,8 @@ public class UserServiceImpl implements UserService {
     public UserDTO updateUser(Long id, UserDTORequest userDTORequest) throws UserNotFoundException{
         EntityUser user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException());
-        user.setUsername(userDTORequest.getUsername());
         user.setEmail(userDTORequest.getEmail());
-        user.setPassword(userDTORequest.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTORequest.getPassword()));
         user = this.userRepository.save(user);
         return new UserDTO(user);
     }
@@ -53,4 +69,23 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException());
         userRepository.deleteById(id);
     }
+
+
+    @Override
+    public UserDTO registerUser(UserDTORequest userDTORequest) {
+        if (userRepository.existsByUsername(userDTORequest.getUsername())) {
+            throw new RuntimeException("Username already exists");
+        }else {
+
+        EntityUser user = new EntityUser();
+        user.setUsername(userDTORequest.getUsername());
+        user.setPassword(passwordEncoder.encode(userDTORequest.getPassword()));
+        user.setEmail(userDTORequest.getEmail());
+        user = userRepository.save(user);
+        return new UserDTO(user);
+        }
+    }
+
+
+
 }

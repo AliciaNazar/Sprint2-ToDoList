@@ -2,7 +2,7 @@ package com.mindhub.ToDoList.dtos;
 
 import com.mindhub.ToDoList.models.EntityUser;
 import com.mindhub.ToDoList.models.Task;
-import com.mindhub.ToDoList.models.TaskStatus;
+import com.mindhub.ToDoList.models.Enums.TaskStatus;
 
 public class TaskDTORequest {
 

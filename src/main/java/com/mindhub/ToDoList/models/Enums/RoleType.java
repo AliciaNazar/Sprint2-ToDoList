@@ -1,4 +1,4 @@
-package com.mindhub.ToDoList.models;
+package com.mindhub.ToDoList.models.Enums;
 
 public enum RoleType {
     ADMIN,

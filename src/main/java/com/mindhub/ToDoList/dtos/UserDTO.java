@@ -1,9 +1,9 @@
 package com.mindhub.ToDoList.dtos;
 
 import com.mindhub.ToDoList.models.EntityUser;
+import com.mindhub.ToDoList.models.Enums.RoleType;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserDTO {
 
@@ -11,6 +11,7 @@ public class UserDTO {
     private String username;
     private String email;
     private List<TaskDTO> tasks;
+    private RoleType roleType;
 
     public UserDTO(){}
 
@@ -23,6 +24,7 @@ public class UserDTO {
                 .stream()
                 .map(task -> new TaskDTO(task))
                 .toList();
+        this.roleType = user.getRoleType();
     }
 
     public Long getId() {
@@ -57,5 +59,12 @@ public class UserDTO {
         this.tasks = tasks;
     }
 
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
 }
 

@@ -1,6 +1,6 @@
 package com.mindhub.ToDoList.config;
 
-import com.mindhub.ToDoList.models.RoleType;
+import com.mindhub.ToDoList.models.Enums.RoleType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

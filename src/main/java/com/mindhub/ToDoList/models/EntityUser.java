@@ -1,24 +1,25 @@
 package com.mindhub.ToDoList.models;
 
-import com.mindhub.ToDoList.dtos.UserDTO;
-import com.mindhub.ToDoList.dtos.UserDTORequest;
-import jakarta.persistence.*;
 
+import com.mindhub.ToDoList.models.Enums.RoleType;
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class EntityUser {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String username;
     private String password;
     private String email;
-    private RoleType roleType = RoleType.ADMIN;
+    private RoleType roleType = RoleType.USER;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Task> tasks = new HashSet<>();
 
 
