@@ -1,4 +1,4 @@
-package com.mindhub.ToDoList.dtos;
+package com.mindhub.ToDoList.dtos.TaskDTOs;
 
 import com.mindhub.ToDoList.models.Task;
 import com.mindhub.ToDoList.models.Enums.TaskStatus;

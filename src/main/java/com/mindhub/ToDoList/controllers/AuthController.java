@@ -1,9 +1,9 @@
 package com.mindhub.ToDoList.controllers;
 
 import com.mindhub.ToDoList.config.JwtUtils;
-import com.mindhub.ToDoList.dtos.LoginUserDTO;
-import com.mindhub.ToDoList.dtos.UserDTO;
-import com.mindhub.ToDoList.dtos.UserDTORequest;
+import com.mindhub.ToDoList.dtos.AuthDTOs.LoginUserDTO;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTO;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTORequest;
 import com.mindhub.ToDoList.models.Enums.RoleType;
 import com.mindhub.ToDoList.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;

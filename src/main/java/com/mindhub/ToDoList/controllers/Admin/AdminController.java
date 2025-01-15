@@ -1,7 +1,7 @@
 package com.mindhub.ToDoList.controllers.Admin;
 
-import com.mindhub.ToDoList.dtos.UserDTO;
-import com.mindhub.ToDoList.dtos.UserDTORequest;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTO;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTORequest;
 import com.mindhub.ToDoList.exceptions.UserNotFoundException;
 import com.mindhub.ToDoList.services.TaskService;
 import com.mindhub.ToDoList.services.UserService;

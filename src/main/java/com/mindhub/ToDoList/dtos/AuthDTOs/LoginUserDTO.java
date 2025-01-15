@@ -1,4 +1,4 @@
-package com.mindhub.ToDoList.dtos;
+package com.mindhub.ToDoList.dtos.AuthDTOs;
 
 public class LoginUserDTO {
     private String username;

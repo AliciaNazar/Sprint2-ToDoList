@@ -1,7 +1,7 @@
 package com.mindhub.ToDoList.controllers.User;
 
-import com.mindhub.ToDoList.dtos.UserDTO;
-import com.mindhub.ToDoList.dtos.UserDTORequest;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTO;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTORequest;
 import com.mindhub.ToDoList.services.TaskService;
 import com.mindhub.ToDoList.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;

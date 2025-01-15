@@ -1,4 +1,4 @@
-package com.mindhub.ToDoList.dtos;
+package com.mindhub.ToDoList.dtos.UserDTOs;
 
 public class UserIdDTO {
 

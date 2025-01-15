@@ -1,9 +1,8 @@
 package com.mindhub.ToDoList.services;
 
-import com.mindhub.ToDoList.dtos.UserDTO;
-import com.mindhub.ToDoList.dtos.UserDTORequest;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTO;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTORequest;
 import com.mindhub.ToDoList.exceptions.UserNotFoundException;
-import com.mindhub.ToDoList.models.EntityUser;
 
 import java.util.List;
 

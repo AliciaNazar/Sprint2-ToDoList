@@ -1,5 +1,6 @@
-package com.mindhub.ToDoList.dtos;
+package com.mindhub.ToDoList.dtos.TaskDTOs;
 
+import com.mindhub.ToDoList.dtos.UserDTOs.UserIdDTO;
 import com.mindhub.ToDoList.models.EntityUser;
 import com.mindhub.ToDoList.models.Task;
 import com.mindhub.ToDoList.models.Enums.TaskStatus;

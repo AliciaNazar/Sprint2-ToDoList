@@ -1,4 +1,4 @@
-package com.mindhub.ToDoList.dtos;
+package com.mindhub.ToDoList.dtos.AuthDTOs;
 
 import com.mindhub.ToDoList.models.Enums.RoleType;
 

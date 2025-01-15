@@ -1,14 +1,12 @@
 package com.mindhub.ToDoList.services.impl;
 
-import com.mindhub.ToDoList.dtos.UserDTO;
-import com.mindhub.ToDoList.dtos.UserDTORequest;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTO;
+import com.mindhub.ToDoList.dtos.UserDTOs.UserDTORequest;
 import com.mindhub.ToDoList.exceptions.UserNotFoundException;
 import com.mindhub.ToDoList.models.EntityUser;
-import com.mindhub.ToDoList.models.Enums.RoleType;
 import com.mindhub.ToDoList.repositories.UserRepository;
 import com.mindhub.ToDoList.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
