@@ -1,6 +1,7 @@
 package com.mindhub.ToDoList.dtos;
 
 import com.mindhub.ToDoList.models.EntityUser;
+import com.mindhub.ToDoList.models.Enums.RoleType;
 
 public class UserDTORequest {
 
@@ -9,6 +10,7 @@ public class UserDTORequest {
     private String username;
     private String email;
     private String password;
+    private RoleType roleType;
 
 
     public UserDTORequest() {
@@ -19,6 +21,7 @@ public class UserDTORequest {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.password = user.getPassword();
+        this.roleType = user.getRoleType();
     }
 
     public Long getId() {
@@ -53,6 +56,14 @@ public class UserDTORequest {
         this.password = password;
     }
 
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
     public static EntityUser toEntity(UserDTORequest userDTORequest){
         if(userDTORequest==null){
             return null;
@@ -61,6 +72,7 @@ public class UserDTORequest {
         user.setUsername(userDTORequest.getUsername());
         user.setEmail(userDTORequest.getEmail());
         user.setPassword(userDTORequest.getPassword());
+        user.setRoleType(userDTORequest.getRoleType());
         return user;
     }
 

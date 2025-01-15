@@ -12,11 +12,9 @@ public interface UserService {
     UserDTO getUserById(Long id) throws UserNotFoundException;
     UserDTO getUserByUsername(String username) throws UserNotFoundException;
     List<UserDTO> getUsers();
-    UserDTO createUser (UserDTORequest userDTO);
     UserDTO updateUser (Long id, UserDTORequest userDTORequest) throws UserNotFoundException;
     void deleteUser(Long id) throws UserNotFoundException;
-
-
+    UserDTO registerUserByAdmin(UserDTORequest userDTORequest);
     UserDTO registerUser(UserDTORequest userDTORequest);
 
 

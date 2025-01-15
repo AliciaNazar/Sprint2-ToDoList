@@ -4,9 +4,11 @@ import com.mindhub.ToDoList.dtos.UserDTO;
 import com.mindhub.ToDoList.dtos.UserDTORequest;
 import com.mindhub.ToDoList.exceptions.UserNotFoundException;
 import com.mindhub.ToDoList.models.EntityUser;
+import com.mindhub.ToDoList.models.Enums.RoleType;
 import com.mindhub.ToDoList.repositories.UserRepository;
 import com.mindhub.ToDoList.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
 
     @Override
@@ -44,15 +47,6 @@ public class UserServiceImpl implements UserService {
         return userDTOS;
     }
 
-
-    @Override
-    public UserDTO createUser(UserDTORequest userDTORequest) {
-        EntityUser user = UserDTORequest.toEntity(userDTORequest);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user = this.userRepository.save(user); //reasigné user para ver cómo se actualizó el id (ya que no se le asigna hasta que se añade a la bd)
-        return new UserDTO(user);
-    }
-
     @Override
     public UserDTO updateUser(Long id, UserDTORequest userDTORequest) throws UserNotFoundException{
         EntityUser user = userRepository.findById(id)
@@ -72,17 +66,31 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public UserDTO registerUserByAdmin(UserDTORequest userDTORequest) {
+        if (userRepository.existsByUsername(userDTORequest.getUsername())) {
+            throw new RuntimeException("Username already exists");
+        }else {
+            EntityUser user = new EntityUser();
+            user.setUsername(userDTORequest.getUsername());
+            user.setPassword(passwordEncoder.encode(userDTORequest.getPassword()));
+            user.setEmail(userDTORequest.getEmail());
+            user.setRoleType(userDTORequest.getRoleType());
+            user = userRepository.save(user);
+        return new UserDTO(user);
+        }
+    }
+
+    @Override
     public UserDTO registerUser(UserDTORequest userDTORequest) {
         if (userRepository.existsByUsername(userDTORequest.getUsername())) {
             throw new RuntimeException("Username already exists");
         }else {
-
-        EntityUser user = new EntityUser();
-        user.setUsername(userDTORequest.getUsername());
-        user.setPassword(passwordEncoder.encode(userDTORequest.getPassword()));
-        user.setEmail(userDTORequest.getEmail());
-        user = userRepository.save(user);
-        return new UserDTO(user);
+            EntityUser user = new EntityUser();
+            user.setUsername(userDTORequest.getUsername());
+            user.setPassword(passwordEncoder.encode(userDTORequest.getPassword()));
+            user.setEmail(userDTORequest.getEmail());
+            user = userRepository.save(user);
+            return new UserDTO(user);
         }
     }
 

@@ -2,6 +2,7 @@ package com.mindhub.ToDoList.controllers;
 
 import com.mindhub.ToDoList.config.JwtUtils;
 import com.mindhub.ToDoList.dtos.LoginUserDTO;
+import com.mindhub.ToDoList.dtos.UserDTO;
 import com.mindhub.ToDoList.dtos.UserDTORequest;
 import com.mindhub.ToDoList.models.Enums.RoleType;
 import com.mindhub.ToDoList.services.UserService;
@@ -59,9 +60,10 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Bad Request: Invalid input data.")
     })
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser (@RequestBody UserDTORequest userDTORequest) {
-        userService.createUser(userDTORequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+    public ResponseEntity<UserDTO> registerUser (@RequestBody UserDTORequest userDTORequest) {
+        UserDTO userDTO = this.userService.registerUser(userDTORequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
     }
+
 }
 
