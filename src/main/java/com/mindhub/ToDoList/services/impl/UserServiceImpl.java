@@ -2,6 +2,8 @@ package com.mindhub.ToDoList.services.impl;
 
 import com.mindhub.ToDoList.dtos.UserDTOs.UserDTO;
 import com.mindhub.ToDoList.dtos.UserDTOs.UserDTORequest;
+import com.mindhub.ToDoList.exceptions.BusinessException;
+import com.mindhub.ToDoList.exceptions.ConflictException;
 import com.mindhub.ToDoList.exceptions.UserNotFoundException;
 import com.mindhub.ToDoList.models.EntityUser;
 import com.mindhub.ToDoList.repositories.UserRepository;
@@ -47,6 +49,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(Long id, UserDTORequest userDTORequest) throws UserNotFoundException{
+        if (userDTORequest.getUsername().isBlank()){
+            throw new BusinessException("Username can't be empty");
+        }
+        if (userDTORequest.getEmail().isBlank()){
+            throw new BusinessException("Email can't be empty");
+        }
+        if (!userDTORequest.getEmail().contains("@")) {
+            throw new BusinessException("Email must contain '@'");
+        }
+        if (userDTORequest.getPassword().isBlank()){
+            throw new BusinessException("Password is required");
+        }
         EntityUser user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException());
         user.setEmail(userDTORequest.getEmail());
@@ -65,8 +79,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO registerUserByAdmin(UserDTORequest userDTORequest) {
+        if (userDTORequest.getUsername().isBlank()){
+            throw new BusinessException("Username can't be empty");
+        }
+        if (userDTORequest.getEmail().isBlank()){
+            throw new BusinessException("Email can't be empty");
+        }
+        if (!userDTORequest.getEmail().contains("@")) {
+            throw new BusinessException("Email must contain '@'");
+        }
+        if (userDTORequest.getPassword().isBlank()){
+            throw new BusinessException("Password is required");
+        }
         if (userRepository.existsByUsername(userDTORequest.getUsername())) {
-            throw new RuntimeException("Username already exists");
+            throw new ConflictException();
         }else {
             EntityUser user = new EntityUser();
             user.setUsername(userDTORequest.getUsername());
@@ -80,8 +106,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO registerUser(UserDTORequest userDTORequest) {
+        if (userDTORequest.getUsername().isBlank()){
+            throw new BusinessException("Username can't be empty");
+        }
+        if (userDTORequest.getEmail().isBlank()){
+            throw new BusinessException("Email can't be empty");
+        }
+        if (!userDTORequest.getEmail().contains("@")) {
+            throw new BusinessException("Email must contain '@'");
+        }
+        if (userDTORequest.getPassword().isBlank()){
+            throw new BusinessException("Password is required");
+        }
         if (userRepository.existsByUsername(userDTORequest.getUsername())) {
-            throw new RuntimeException("Username already exists");
+            throw new ConflictException();
         }else {
             EntityUser user = new EntityUser();
             user.setUsername(userDTORequest.getUsername());

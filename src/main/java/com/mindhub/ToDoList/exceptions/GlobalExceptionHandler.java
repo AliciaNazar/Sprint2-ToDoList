@@ -20,4 +20,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(),ex.getStatus());
     }
 
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<Object> handlerConflictException(ConflictException ex){
+        return new ResponseEntity<>(ex.getMessage(),ex.getStatus());
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Object> handlerBusinessException(BusinessException ex){
+        return new ResponseEntity<>(ex.getMessage(),ex.getStatus());
+    }
 }

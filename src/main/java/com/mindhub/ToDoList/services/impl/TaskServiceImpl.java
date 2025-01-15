@@ -3,6 +3,7 @@ package com.mindhub.ToDoList.services.impl;
 import com.mindhub.ToDoList.dtos.TaskDTOs.TaskDTO;
 import com.mindhub.ToDoList.dtos.TaskDTOs.TaskDTORequest;
 import com.mindhub.ToDoList.dtos.UserDTOs.UserDTO;
+import com.mindhub.ToDoList.exceptions.BusinessException;
 import com.mindhub.ToDoList.exceptions.TaskNotFoundException;
 import com.mindhub.ToDoList.exceptions.UserNotFoundException;
 import com.mindhub.ToDoList.models.EntityUser;
@@ -42,7 +43,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO createTaskByAdmin(TaskDTORequest taskDTORequest) {
-
+        if (taskDTORequest.getTitle().isBlank()){throw new BusinessException("Title is required");}
         EntityUser user = this.userRepository.findById(taskDTORequest.getUser().getId())
                 .orElseThrow(() -> new UserNotFoundException());
         Task task = TaskDTORequest.toEntity(taskDTORequest,user); //creo una tarea y le asigno los valores de taskDTORequest
@@ -52,6 +53,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO createTaskByUser(TaskDTO taskDTO, UserDTO userDTO) {
+        if (taskDTO.getTitle().isBlank()){throw new BusinessException("Title is required");}
         EntityUser user = this.userRepository.findByUsername(userDTO.getUsername()).orElseThrow(() -> new UserNotFoundException()); ;
         Task task = new Task(taskDTO.getTitle(),taskDTO.getDescription(),taskDTO.getStatus(),user);
         task = this.taskRepository.save(task);
@@ -59,9 +61,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
-
     @Override
     public TaskDTO updateTask(Long id, TaskDTO taskDTO) throws TaskNotFoundException{
+        if (taskDTO.getTitle().isBlank()){throw new BusinessException("Title is required");}
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException());
         task.setTitle(taskDTO.getTitle());
